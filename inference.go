@@ -8,7 +8,6 @@ import (
 
 	"github.com/nfnt/resize"
 	ort "github.com/yalue/onnxruntime_go"
-	"gocv.io/x/gocv"
 )
 
 var DEFAULTCLASSES = []string{
@@ -195,13 +194,10 @@ func (y *Yolo) prepareInput(img image.Image) error {
     return nil
 }
 
-func (y *Yolo) Predict(mat gocv.Mat) ([]BoundingBox, error) {
-    img, err := mat.ToImage()
+func (y *Yolo) Predict(img image.Image) ([]BoundingBox, error) {
     originalWidth, originalHeight := img.Bounds().Dx(), img.Bounds().Dy()
-    if err != nil {
-        return nil, err
-    }
-    err = y.prepareInput(img)
+
+    err := y.prepareInput(img)
     if err != nil {
         return nil, err
     }

@@ -33,7 +33,11 @@ func main(){
 			continue
 		}
 
-		boxes, err := yolo.Predict(mat)
+		img ,err := mat.ToImage()
+		if err != nil {
+			return 
+		}
+		boxes, err := yolo.Predict(img)
 
 		if err != nil {
 			fmt.Println(err)
